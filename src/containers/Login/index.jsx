@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import Logo from '../../assets/logo.png';
 import { Button } from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
+import { api } from '../../services/api';
 import {
   Container,
   InputContainer,
@@ -38,6 +39,10 @@ export function Login() {
   });
 
   const onSubmit = async (data) => {
+    api.post('/sessions', {
+      email: data.email,
+      password: data.password,
+    });
     setError('');
     const success = await login(data.email, data.password);
     if (success) {
