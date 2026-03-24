@@ -1,26 +1,28 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 import { Dashboard } from './containers/Dashboard';
 import { Login } from './containers/Login';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import GlobalStyles from './styles/globalStyles';
-
-function AppContent() {
-  const { isAuthenticated } = useAuth();
-
-  return (
-    <>
-      <GlobalStyles />
-      {isAuthenticated ? <Dashboard /> : <Login />}
-    </>
-  );
-}
 
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <GlobalStyles />
+      <ToastContainer
+        position="top-right"
+        theme="colored"
+        closeButton={false}
+        rtl={false}
+        limit={1}
+        autoClose={false}
+        hideProgressBar
+        draggable={false}
+      />
+      <div>{true ? <Dashboard /> : <Login />}</div>
     </AuthProvider>
   );
 }

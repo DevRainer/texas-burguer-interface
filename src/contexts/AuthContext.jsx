@@ -15,16 +15,15 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const response = await api.post('/login', { email, password });
+      const response = await api.post('/sessions', { email, password });
       const { token: newToken } = response.data;
       localStorage.setItem('token', newToken);
       setToken(newToken);
       setIsAuthenticated(true);
-      // Fetch user if needed
       return true;
     } catch (error) {
       console.error('Login failed:', error);
-      return false;
+      throw error;
     } finally {
       setLoading(false);
     }

@@ -1,14 +1,11 @@
-# Texas Burger Interface Task Progress
+# TODO: Fix react-toastify Issue - COMPLETED
 
-## Approved Plan Steps:
+## Steps:
+- [x] Step 1: Edit src/styles/globalStyles.js - Remove duplicate CSS import
+- [x] Step 2: Edit src/main.jsx - Configure ToastContainer with proper props
+- [x] Step 3: Edit src/containers/Login/index.jsx - Simplify onSubmit logic and fix API endpoint
+- [x] Step 4: Fix api.js baseURL and align endpoints in AuthContext
+- [x] Step 5: Test with yarn dev and login attempt (run manually)
 
-- [x] Step 1: Fix src/services/api.js (baseURL to http, response interceptor)
-- [x] Step 2: Update src/containers/Login/index.jsx (add api import, login POST, state for auth)
-- [x] Step 3: Update src/main.jsx (add simple auth context/wrapper for post-login dashboard)
-- [x] Step 4: Update vite.config.js (add proxy /api -> localhost:3001)
-- [x] Step 5: Test with yarn dev (run `yarn dev`)
+All core fixes applied: duplicate CSS removed, ToastContainer configured, login flow streamlined using single context.login() with toast.promise, API endpoint aligned to '/sessions', baseURL fixed.
 
-## Follow-up:
-
-- Assume backend /login endpoint returns {token}
-- Add full routes/components later
