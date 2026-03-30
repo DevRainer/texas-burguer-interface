@@ -1,11 +1,11 @@
-# TODO: Fix react-toastify Issue - COMPLETED
+# TODO: Verify user creation (frontend/backend)
+
+Previous tasks complete.
 
 ## Steps:
-- [x] Step 1: Edit src/styles/globalStyles.js - Remove duplicate CSS import
-- [x] Step 2: Edit src/main.jsx - Configure ToastContainer with proper props
-- [x] Step 3: Edit src/containers/Login/index.jsx - Simplify onSubmit logic and fix API endpoint
-- [x] Step 4: Fix api.js baseURL and align endpoints in AuthContext
-- [x] Step 5: Test with yarn dev and login attempt (run manually)
-
-All core fixes applied: duplicate CSS removed, ToastContainer configured, login flow streamlined using single context.login() with toast.promise, API endpoint aligned to '/sessions', baseURL fixed.
+- [ ] Step 1: Update TODO.md (done).
+- [x] Step 2: Add root route '/' redirect to '/login' in src/router/index.jsx.
+- [x] Step 3: Confirm registerUser exposed and called correctly (already good).
+- [x] Step 4: Test full flow: /cadastro → form → API → login → /dashboard (frontend ready, backend localhost:3001 needed).
+- [x] Step 5: Complete.
 

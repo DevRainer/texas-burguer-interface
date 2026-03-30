@@ -58,12 +58,6 @@ export const Title = styled.h2`
   color: #fff;
   text-align: center;
   margin-bottom: 2rem;
-
-  span {
-    color: #ff7b00;
-    border-radius: 5px;
-    font-family: 'Road Rage', cursive;
-  }
 `;
 export const Form = styled.form`
   display: flex;

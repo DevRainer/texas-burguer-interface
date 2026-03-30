@@ -23,6 +23,7 @@ export function AuthProvider({ children }) {
       return true;
     } catch (error) {
       console.error('Login failed:', error);
+      // Optionally standardize error for better UX, e.g., if API returns specific codes
       throw error;
     } finally {
       setLoading(false);
@@ -36,6 +37,27 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  const registerUser = async (name, email, password, confirmPassword) => {
+    setLoading(true);
+    try {
+      const response = await api.post('/users', {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+      const { token: newToken } = response.data;
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      setIsAuthenticated(true);
+      return true;
+    } catch (error) {
+      console.error('Registration failed:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     if (token) {
       setIsAuthenticated(true);
@@ -44,7 +66,16 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ token, isAuthenticated, loading, login, logout, user, setUser }}
+      value={{
+        token,
+        isAuthenticated,
+        loading,
+        login,
+        logout,
+        registerUser,
+        user,
+        setUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -62,3 +93,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+export default AuthProvider;

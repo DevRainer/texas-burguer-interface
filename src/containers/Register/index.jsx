@@ -19,17 +19,22 @@ import {
 
 const schema = yup
   .object({
+    name: yup.string().required('Nome é obrigatório'),
     email: yup.string().email('Email inválido').required('Email é obrigatório'),
     password: yup
       .string()
       .min(6, 'Mínimo de 6 caracteres')
       .required('Senha é obrigatória'),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'As senhas devem corresponder')
+      .required('Confirmação de senha é obrigatória'),
   })
   .required();
 
-export function Login() {
+export function Register() {
   const navigate = useNavigate();
-  const { login, loading } = useAuth();
+  const { registerUser, loading } = useAuth();
 
   const {
     register,
@@ -43,18 +48,30 @@ export function Login() {
   const onSubmit = async (data) => {
     try {
       await toast.promise(
-        login(data.email, data.password),
+        registerUser(
+          data.name,
+          data.email,
+          data.password,
+          data.confirmPassword,
+        ),
         {
-          pending: 'Verificando credenciais...',
-          success: 'Login bem-sucedido!',
-          error: 'Erro ao fazer login. Verifique suas credenciais.',
+          pending: 'Criando sua conta...',
+          success: 'Cadastro bem-sucedido!',
+          error: {
+            render({ data }) {
+              if (data?.response?.status === 400) {
+                return 'Erro ao criar conta. Email já cadastrado.';
+              }
+              return 'Erro ao criar conta. Verifique seus dados.';
+            },
+          },
         },
         {
           position: 'top-right',
         },
       );
       reset();
-      navigate('/dashboard');
+      navigate('/login');
     } catch (error) {
       console.error(error);
     }
@@ -66,12 +83,18 @@ export function Login() {
         <img src={Logo} alt="Logo" />
       </LeftContainer>
       <RightContainer>
-        <Title>
-          Olá, seja bem vindo ao <span>Sabor Goiano Burguer!</span>
-          <br />
-          Acesse com seu <span>Login e senha.</span>
-        </Title>
+        <Title>Criar conta</Title>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <InputContainer>
+            <label>Nome</label>
+            <input
+              type="text"
+              placeholder="Digite seu nome"
+              disabled={loading}
+              {...register('name')}
+            />
+            <p>{errors?.name?.message}</p>
+          </InputContainer>
           <InputContainer>
             <label>Email</label>
             <input
@@ -92,13 +115,23 @@ export function Login() {
             />
             <p>{errors?.password?.message}</p>
           </InputContainer>
+          <InputContainer>
+            <label>Confirmar senha</label>
+            <input
+              type="password"
+              placeholder="Digite sua senha novamente"
+              disabled={loading}
+              {...register('confirmPassword')}
+            />
+            <p>{errors?.confirmPassword?.message}</p>
+          </InputContainer>
           <Button type="submit" disabled={loading}>
-            {loading ? 'Entrando...' : 'Entrar'}
+            {loading ? 'Criando conta...' : 'Confirmar cadastro'}
           </Button>
         </form>
         <p>
-          Não possui conta?{' '}
-          <a onClick={() => navigate('/cadastro')}>Clique aqui.</a>
+          Já possui conta?{' '}
+          <a onClick={() => navigate('/login')}>Clique aqui.</a>
         </p>
       </RightContainer>
     </Container>
