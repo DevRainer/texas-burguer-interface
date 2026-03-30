@@ -8,9 +8,9 @@ import { AuthProvider } from './contexts/AuthContext';
 import { router } from './router';
 import GlobalStyles from './styles/globalStyles';
 
-function AppContent() {
+function App() {
   return (
-    <>
+    <AuthProvider>
       <GlobalStyles />
       <ToastContainer
         position="top-right"
@@ -23,21 +23,12 @@ function AppContent() {
         draggable={false}
       />
       <RouterProvider router={router} />
-    </>
-  );
-}
-
-function App() {
-  return (
-    <AuthProvider>
-      <AppContent />
     </AuthProvider>
   );
 }
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <GlobalStyles />
     <App />
   </StrictMode>,
 );

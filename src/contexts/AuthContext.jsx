@@ -1,10 +1,9 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
 import { api } from '../services/api.js';
-
-const AuthContext = createContext();
+import { AuthContext } from './auth-context.js';
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -59,9 +58,7 @@ export function AuthProvider({ children }) {
     }
   };
   useEffect(() => {
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    setIsAuthenticated(!!token);
   }, [token]);
 
   return (
@@ -85,13 +82,3 @@ export function AuthProvider({ children }) {
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
-  return context;
-};
-
-export default AuthProvider;

@@ -45,6 +45,9 @@ export const RightContainer = styled.div`
     font-size: 18px;
     font-weight: 600;
   }
+  h2 {
+    color: #ff7b00;
+  }
 
   a {
     color: #ff7b00;

@@ -1,4 +1,3 @@
-import {} from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,7 +7,7 @@ import * as yup from 'yup';
 
 import Logo from '../../assets/logo.png';
 import { Button } from '../../components/Button';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/auth';
 import {
   Container,
   InputContainer,

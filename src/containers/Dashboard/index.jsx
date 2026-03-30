@@ -1,5 +1,5 @@
 import { Button } from '../../components/Button';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/auth';
 import { Container, Content, Title } from './styles';
 
 export function Dashboard() {
