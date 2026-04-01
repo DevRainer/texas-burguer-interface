@@ -10,7 +10,7 @@ export function ProtectedRoute({ children }) {
 
   // Se não estiver autenticado, redireciona para login
   if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   // Se estiver autenticado, renderiza o conteúdo protegido

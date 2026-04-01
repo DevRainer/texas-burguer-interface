@@ -2,7 +2,7 @@ import { Button } from '../../components/Button';
 import { useAuth } from '../../contexts/auth';
 import { Container, Content, Title } from './styles';
 
-export function Dashboard() {
+export function Home() {
   const { logout } = useAuth();
 
   return (

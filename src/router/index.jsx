@@ -1,6 +1,6 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import { Dashboard } from '../containers/Dashboard';
+import { Home } from '../containers/Home';
 import { Login } from '../containers/Login';
 import { Register } from '../containers/Register';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -8,7 +8,11 @@ import { ProtectedRoute } from './ProtectedRoute';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/login" replace />,
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/login',
@@ -19,12 +23,8 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: '/dashboard',
-    element: (
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
-    ),
+    path: '*',
+    element: <h1>Página não encontrada</h1>, // ou um componente customizado
   },
 ]);
 

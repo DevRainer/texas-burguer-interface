@@ -53,7 +53,7 @@ export function Login() {
         },
       );
       reset();
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
