@@ -8,7 +8,7 @@ export const Container = styled.div`
   height: 100vh;
   width: 100vw;
 
-  @media (max-width: 768px) {
+  @media (max-width: px) {
     flex-direction: column;
   }
 `;

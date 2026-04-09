@@ -1,19 +1,6 @@
-# Responsividade para Home, Login e Register
+# TODO Steps for Fixing banner-home.svg Import
 
-## ✅ Concluído
-- [x] Criar TODO.md
-- [x] Editar src/containers/Home/styles.js
-- [x] Editar src/containers/Login/styles.js  
-- [x] Editar src/containers/Register/styles.js
-
-## ⏳ Pendente
-- [ ] Testar responsividade (mobile, tablet, desktop)
-- [ ] Completar tarefa
-
-## Breakpoints
-- Mobile: ≤768px
-- Tablet: 769px-1024px
-- Desktop: >1024px
-
-Mobile-first approach com clamp() e media queries.
+- [x] Step 1: Edit src/containers/Home/styles.js to import banner-home.svg instead of .jpg
+- [x] Step 2: Verify the change (run yarn dev if needed)
+- [x] Step 3: Complete task
 
