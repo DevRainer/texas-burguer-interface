@@ -1,5 +1,6 @@
 import { CategoriesCarousel } from '../../components/CategoriesCarousel';
-import { Container, Content, Banner } from './styles';
+import { OffersCarousel } from '../../components/OffersCarousel';
+import { Container, Banner, Footer } from './styles';
 
 export function Home() {
   return (
@@ -8,11 +9,14 @@ export function Home() {
         <h1>Bem-Vindo(a)!</h1>
       </Banner>
       <Container>
-        <Content>
+        <div>
           <CategoriesCarousel />
-          <div>Carrossel Produtos</div>
-        </Content>
+          <OffersCarousel />
+        </div>
       </Container>
+      <Footer>
+        <p>© 2026 Sabor Goiano Burguer. Todos os direitos reservados.</p>
+      </Footer>
     </main>
   );
 }

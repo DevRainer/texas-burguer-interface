@@ -21,9 +21,22 @@ export const Banner = styled.div`
 
 export const Container = styled.div`
   background:
-    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
     url(${Background});
-  height: 590px;
+  background-size: cover; /* Faz a imagem cobrir toda a área */
+  background-position: center; /* Centraliza a imagem */
+  width: 100vw; /* Largura total da viewport */
+  height: 100vh;
 `;
 
 export const Content = styled.div``;
+
+export const Footer = styled.footer`
+  background-color: #f55f09;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+`;
