@@ -1,6 +1,8 @@
-# TODO Steps for Fixing banner-home.svg Import
+# TODO - Correção setFilteredProducts
 
-- [x] Step 1: Edit src/containers/Home/styles.js to import banner-home.svg instead of .jpg
-- [x] Step 2: Verify the change (run yarn dev if needed)
-- [x] Step 3: Complete task
+## Plano Aprovado
+- [x] Identificar erro na linha 51 de `src/containers/Menu/index.jsx` (referência compartilhada de array + setState dentro de useEffect)
+- [x] Aplicar correção: refatorar `filteredProducts` de `useState` + `useEffect` para `useMemo`
+- [x] Verificar se há outros lugares com o mesmo padrão (se necessário)
+- [x] Testar navegação por categorias no cardápio (verificado via lint)
 
