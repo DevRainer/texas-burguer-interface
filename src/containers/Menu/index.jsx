@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { CardProduct } from '../../components/CardProduct';
 import { api } from '../../services/api';
@@ -10,12 +10,24 @@ import {
   CategoryMenu,
   ProductsContainer,
   CategoryButton,
+  BackButton,
+  Footer,
 } from './styles';
 
 export function Menu() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(0);
+  const [searchParams] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam !== null) {
+      const categoryId = Number(categoryParam);
+      if (!isNaN(categoryId)) {
+        return categoryId;
+      }
+    }
+    return 0;
+  });
 
   const filteredProducts = useMemo(() => {
     if (activeCategory === 0) {
@@ -25,6 +37,7 @@ export function Menu() {
   }, [activeCategory, products]);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     async function loadData() {
       try {
@@ -53,7 +66,7 @@ export function Menu() {
   }, []);
 
   return (
-    <Container>
+    <>
       <Banner>
         <h1>
           O Melhor
@@ -64,32 +77,46 @@ export function Menu() {
           <span>Esse cartápio está irresistível</span>
         </h1>
       </Banner>
-      <CategoryMenu>
-        {categories.map((category) => (
-          <CategoryButton
-            key={category.id}
-            onClick={() => {
-              navigate(
-                {
-                  pathname: '/cardapio',
-                  search: `?category=${category.id}`,
-                },
-                {
-                  replace: false,
-                },
-              );
-              setActiveCategory(category.id);
-            }}
-          >
-            {category.name}
-          </CategoryButton>
-        ))}
-      </CategoryMenu>
-      <ProductsContainer>
-        {filteredProducts.map((product) => (
-          <CardProduct key={product.id} product={product} />
-        ))}
-      </ProductsContainer>
-    </Container>
+      <Container>
+        <CategoryMenu>
+          {categories.map((category) => (
+            <CategoryButton
+              key={category.id}
+              $isActiveCategory={activeCategory === category.id}
+              onClick={() => {
+                navigate(
+                  {
+                    pathname: '/cardapio',
+                    search: `?category=${category.id}`,
+                  },
+                  {
+                    replace: false,
+                  },
+                );
+                setActiveCategory(category.id);
+              }}
+            >
+              {category.name}
+            </CategoryButton>
+          ))}
+        </CategoryMenu>
+        <ProductsContainer>
+          {filteredProducts.map((product) => (
+            <CardProduct key={product.id} product={product} />
+          ))}
+        </ProductsContainer>
+        <BackButton
+          onClick={() => {
+            navigate('/', { replace: true });
+            setActiveCategory(0);
+          }}
+        >
+          Voltar
+        </BackButton>
+      </Container>
+      <Footer>
+        <p>© 2026 Sabor Goiano Burguer. Todos os direitos reservados.</p>
+      </Footer>
+    </>
   );
 }

@@ -8,7 +8,6 @@ import BannerHamburger from '../../assets/banner-hamburger.svg';
 export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #f0f0f0;
   background:
     linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
     url(${Background});
@@ -55,9 +54,8 @@ export const CategoryMenu = styled.div`
 
 export const CategoryButton = styled(Link)`
   background-color: transparent;
-  border: 2px solid #f55f09;
-  border-radius: 8px;
-  color: #f55f09;
+  border: none;
+  color: ${(props) => (props.$isActiveCategory ? '#333' : '#f55f09')};
   cursor: pointer;
   font-size: 24px;
   font-weight: bold;
@@ -65,6 +63,8 @@ export const CategoryButton = styled(Link)`
   text-align: center;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
+  border-bottom: ${(props) =>
+    props.$isActiveCategory ? '4px solid #f55f09' : 'none'};
 `;
 
 export const ProductsContainer = styled.div`
@@ -74,7 +74,30 @@ export const ProductsContainer = styled.div`
   gap: 60px;
   justify-content: center;
   max-width: 1200px;
-  margin: 50px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 50px auto 0;
+`;
+export const BackButton = styled.button`
+  display: block;
+  margin: 0 auto 30px auto;
+  padding: 10px 20px;
+  background-color: #f55f09;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #e14c00;
+  }
+`;
+export const Footer = styled.footer`
+  background-color: #f55f09;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 `;

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -20,16 +22,6 @@ export const ContainerItems = styled.div`
   justify-content: center;
   align-items: flex-end;
   border-radius: 15px;
-
-  p {
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    padding: 10px 30px;
-    font-size: 28px;
-    font-weight: bold;
-    text-align: left;
-  }
 `;
 
 export const Title = styled.h2`
@@ -52,5 +44,23 @@ export const Title = styled.h2`
     transform: translateX(-50%);
     border-radius: 5px;
     margin: 0;
+  }
+`;
+
+export const CategoryButton = styled(Link)`
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 10px 30px;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
   }
 `;
