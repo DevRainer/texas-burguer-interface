@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { BackButton } from '../../components/BackButton';
 import { CardProduct } from '../../components/CardProduct';
 import { api } from '../../services/api';
 import { formatPrice } from '../../utils/formatPrice';
@@ -10,7 +11,6 @@ import {
   CategoryMenu,
   ProductsContainer,
   CategoryButton,
-  BackButton,
   Footer,
 } from './styles';
 

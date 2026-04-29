@@ -76,22 +76,6 @@ export const ProductsContainer = styled.div`
   max-width: 1200px;
   margin: 50px auto 0;
 `;
-export const BackButton = styled.button`
-  display: block;
-  margin: 0 auto 30px auto;
-  padding: 10px 20px;
-  background-color: #f55f09;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-
-  &:hover {
-    background-color: #e14c00;
-  }
-`;
 export const Footer = styled.footer`
   background-color: #f55f09;
   color: #fff;
