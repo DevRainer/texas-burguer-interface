@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { api } from '../services/api.js';
-import { AuthContext } from './auth-context.js';
+import { AuthContext } from './auth-context.jsx';
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token'));

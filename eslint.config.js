@@ -41,7 +41,12 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      'prettier/prettier': 'error',
+      'prettier/prettier': [
+        'error',
+        {
+          singleQuote: true,
+        },
+      ],
       'import-helpers/order-imports': [
         'warn',
         {
