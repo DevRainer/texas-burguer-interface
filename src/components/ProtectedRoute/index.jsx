@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth.js';
 
 export function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();

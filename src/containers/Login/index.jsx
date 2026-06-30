@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import Logo from '../../assets/logo.png';
 import { Button } from '../../components/Button';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../hooks/useAuth.js';
 import {
   Container,
   InputContainer,
