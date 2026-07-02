@@ -1,35 +1,42 @@
+// router/routes.jsx
 import { createBrowserRouter } from 'react-router-dom';
 
 import { Home } from '../containers/Home';
 import { Login } from '../containers/Login';
 import { Menu } from '../containers/Menu';
 import { Register } from '../containers/Register';
+import { Layout } from './Layout';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: (
-      <ProtectedRoute>
-        <Home />
-      </ProtectedRoute>
-    ),
+    element: <Layout />, // Layout com Header
+    children: [
+      {
+        path: '/',
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/cardapio',
+        element: <Menu />,
+      },
+    ],
   },
   {
     path: '/login',
-    element: <Login />,
+    element: <Login />, // sem Header
   },
   {
     path: '/cadastro',
-    element: <Register />,
-  },
-  {
-    path: '/cardapio',
-    element: <Menu />,
+    element: <Register />, // sem Header
   },
   {
     path: '*',
-    element: <h1>Página não encontrada</h1>, // ou um componente customizado
+    element: <h1>Página não encontrada</h1>,
   },
 ]);
 
