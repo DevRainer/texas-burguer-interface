@@ -42,7 +42,7 @@ export function Header() {
           </Profile>
           <LinkContainer>
             <ShoppingCart size={32} color="#fff" />
-            <HeaderLink to="/cart">Carrinho</HeaderLink>
+            <HeaderLink to="/carrinho">Carrinho</HeaderLink>
           </LinkContainer>
         </Option>
       </Content>

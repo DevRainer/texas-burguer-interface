@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BackButton } from '../../components/BackButton';
 import { CategoriesCarousel } from '../../components/CategoriesCarousel';
 import { OffersCarousel } from '../../components/OffersCarousel';
-import { Container, Banner, Footer } from './styles';
+import { Container, Banner } from './styles';
 
 export function Home() {
   const navigate = useNavigate();
@@ -22,9 +22,6 @@ export function Home() {
           Logout
         </BackButton>
       </Container>
-      <Footer>
-        <p>© 2026 Sabor Goiano Burguer. Todos os direitos reservados.</p>
-      </Footer>
     </main>
   );
 }

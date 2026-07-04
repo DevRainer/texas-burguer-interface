@@ -11,7 +11,6 @@ import {
   CategoryMenu,
   ProductsContainer,
   CategoryButton,
-  Footer,
 } from './styles';
 
 export function Menu() {
@@ -114,9 +113,6 @@ export function Menu() {
           Voltar
         </BackButton>
       </Container>
-      <Footer>
-        <p>© 2026 Sabor Goiano Burguer. Todos os direitos reservados.</p>
-      </Footer>
     </>
   );
 }

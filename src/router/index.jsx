@@ -1,6 +1,7 @@
 // router/routes.jsx
 import { createBrowserRouter } from 'react-router-dom';
 
+import { Cart } from '../containers/Cart';
 import { Home } from '../containers/Home';
 import { Login } from '../containers/Login';
 import { Menu } from '../containers/Menu';
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: '/cardapio',
         element: <Menu />,
+      },
+      {
+        path: '/carrinho',
+        element: <Cart />,
       },
     ],
   },
