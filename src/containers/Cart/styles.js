@@ -53,5 +53,3 @@ export const Content = styled.div`
   padding: 40px;
   margin: 0 auto;
 `;
-export const CartItems = styled.div``;
-export const CartResume = styled.div``;

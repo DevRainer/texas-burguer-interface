@@ -1,34 +1,30 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify'; // lembre-se de instalar: npm install react-toastify
+import { toast } from 'react-toastify';
 
 import PropTypes from 'prop-types';
 
 import { CartContext } from '../contexts/CartContext';
+import { loadCart, saveCart, clearCartStorage } from '../helpers/cartStorage';
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState(() => {
-    try {
-      const storedCart = localStorage.getItem('cart');
-      return storedCart ? JSON.parse(storedCart) : [];
-    } catch (error) {
-      console.error('Erro ao carregar carrinho:', error);
-      toast.error('Não foi possível carregar o carrinho.');
-      return [];
-    }
-  });
+  const [cartItems, setCartItems] = useState(() => loadCart());
 
-  // 🔧 Função auxiliar para atualizar estado + localStorage com tratamento de erro
   const updateLocalStorage = (updatedCart) => {
-    try {
-      setCartItems(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-    } catch (error) {
-      console.error('Erro ao salvar carrinho:', error);
-      toast.error('Não foi possível atualizar o carrinho.');
+    setCartItems(updatedCart);
+    saveCart(updatedCart);
+  };
+
+  const validateItem = (item) => {
+    if (!item.id || typeof item.price !== 'number' || !item.quantity) {
+      toast.error('Produto inválido.');
+      return false;
     }
+    return true;
   };
 
   const addToCart = (item) => {
+    if (!validateItem(item)) return;
+
     try {
       const existingItem = cartItems.find(
         (cartItem) => cartItem.id === item.id,
@@ -46,42 +42,36 @@ export function CartProvider({ children }) {
       }
 
       updateLocalStorage(updatedCart);
+      toast.success(`${item.name} foi adicionado ao carrinho!`);
     } catch (error) {
       console.error('Erro ao adicionar item:', error);
       toast.error('Não foi possível adicionar o item ao carrinho.');
     }
   };
 
-  const increaseQuantity = (id) => {
+  const changeQuantity = (id, delta) => {
     try {
       const updatedCart = cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+          : item,
       );
       updateLocalStorage(updatedCart);
+      toast.success('Quantidade atualizada.');
     } catch (error) {
-      console.error('Erro ao aumentar quantidade:', error);
+      console.error('Erro ao atualizar quantidade:', error);
       toast.error('Não foi possível atualizar a quantidade.');
     }
   };
 
-  const decreaseQuantity = (id) => {
-    try {
-      const updatedCart = cartItems.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item,
-      );
-      updateLocalStorage(updatedCart);
-    } catch (error) {
-      console.error('Erro ao diminuir quantidade:', error);
-      toast.error('Não foi possível atualizar a quantidade.');
-    }
-  };
+  const increaseQuantity = (id) => changeQuantity(id, +1);
+  const decreaseQuantity = (id) => changeQuantity(id, -1);
 
   const removeFromCart = (id) => {
     try {
       const updatedCart = cartItems.filter((item) => item.id !== id);
       updateLocalStorage(updatedCart);
+      toast.success('Item removido do carrinho.');
     } catch (error) {
       console.error('Erro ao remover item:', error);
       toast.error('Não foi possível remover o item.');
@@ -91,7 +81,8 @@ export function CartProvider({ children }) {
   const clearCart = () => {
     try {
       setCartItems([]);
-      localStorage.removeItem('cart');
+      clearCartStorage();
+      toast.success('Carrinho limpo com sucesso!');
     } catch (error) {
       console.error('Erro ao limpar carrinho:', error);
       toast.error('Não foi possível limpar o carrinho.');
@@ -103,7 +94,6 @@ export function CartProvider({ children }) {
     0,
   );
 
-  // 🔄 Sincronização entre múltiplas abas
   useEffect(() => {
     const syncCart = (event) => {
       if (event.key === 'cart') {

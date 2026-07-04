@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-import { BackButton } from '../../components/BackButton';
-import { CategoriesCarousel } from '../../components/CategoriesCarousel';
-import { OffersCarousel } from '../../components/OffersCarousel';
+import {
+  BackButton,
+  CategoriesCarousel,
+  OffersCarousel,
+} from '../../components';
 import { Container, Banner } from './styles';
 
 export function Home() {

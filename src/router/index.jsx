@@ -1,11 +1,7 @@
 // router/routes.jsx
 import { createBrowserRouter } from 'react-router-dom';
 
-import { Cart } from '../containers/Cart';
-import { Home } from '../containers/Home';
-import { Login } from '../containers/Login';
-import { Menu } from '../containers/Menu';
-import { Register } from '../containers/Register';
+import { Cart, Home, Login, Menu, Register } from '../containers';
 import { Layout } from './Layout';
 import { ProtectedRoute } from './ProtectedRoute';
 

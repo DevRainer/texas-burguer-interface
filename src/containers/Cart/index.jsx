@@ -1,12 +1,6 @@
 import Logo from '../../assets/logo.png';
-import {
-  Banner,
-  CartItems,
-  CartResume,
-  Container,
-  Content,
-  Title,
-} from '../Cart/styles.js';
+import { CartItems } from '../../components/CartItems';
+import { Banner, Container, Content, Title } from '../Cart/styles.js';
 export function Cart() {
   return (
     <Container>
@@ -16,7 +10,6 @@ export function Cart() {
       <Title>Checkout - Pedido</Title>
       <Content>
         <CartItems />
-        <CartResume />
       </Content>
     </Container>
   );
