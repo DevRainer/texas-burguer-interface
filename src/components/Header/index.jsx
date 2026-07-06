@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { UserCircle, ShoppingCart } from '@phosphor-icons/react';
 
+import { useCart } from '../../hooks/useCart'; // ajuste o caminho conforme sua estrutura
 import {
   Container,
   Navigation,
@@ -11,12 +12,16 @@ import {
   LinkContainer,
   Logout,
   Content,
+  CartIconWrapper,
+  CartCount,
 } from './styles';
+
 export function Header() {
   const navigate = useNavigate();
+  const { cartItems } = useCart(); // vindo do contexto
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   function handleLogout() {
-    // aqui você pode limpar tokens, contexto, etc.
     navigate('/login');
   }
 
@@ -26,7 +31,7 @@ export function Header() {
         <Navigation>
           <div>
             <HeaderLink to="/">Home</HeaderLink>
-            <hr></hr>
+            <hr />
             <HeaderLink to="/cardapio">Cardápio</HeaderLink>
           </div>
         </Navigation>
@@ -41,7 +46,10 @@ export function Header() {
             </div>
           </Profile>
           <LinkContainer>
-            <ShoppingCart size={32} color="#fff" />
+            <CartIconWrapper>
+              <ShoppingCart size={32} color="#fff" />
+              {totalItems > 0 && <CartCount>{totalItems}</CartCount>}
+            </CartIconWrapper>
             <HeaderLink to="/carrinho">Carrinho</HeaderLink>
           </LinkContainer>
         </Option>

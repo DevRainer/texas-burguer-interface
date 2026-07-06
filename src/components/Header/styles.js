@@ -84,3 +84,19 @@ export const Logout = styled.button`
   background-color: transparent;
   border: none;
 `;
+export const CartIconWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const CartCount = styled.span`
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+`;
