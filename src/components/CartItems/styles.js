@@ -52,3 +52,13 @@ export const EmptyCartMessage = styled.td`
 export const ProductTotalPrice = styled.td`
   font-weight: bold;
 `;
+export const TrashImage = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;

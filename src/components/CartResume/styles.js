@@ -10,7 +10,7 @@ export const Container = styled.div`
   margin-top: 20px;
 
   * {
-    font-weight: 700;
+    font-weight: 500;
   }
 
   .container-top {
@@ -61,5 +61,9 @@ export const Container = styled.div`
     font-weight: 700;
     margin-top: 100px;
     padding: 20px;
+
+    * {
+      font-weight: 700;
+    }
   }
 `;
