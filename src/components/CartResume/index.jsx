@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useCart } from '../../hooks/useCart';
@@ -8,8 +9,9 @@ import { Button } from '../Button';
 import { Container } from './styles';
 
 export function CartResume() {
-  const { cartItems, clearCart } = useCart();
+  const { cartItems } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const finalPrice = useMemo(() => {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -26,6 +28,56 @@ export function CartResume() {
     setIsSubmitting(true);
 
     try {
+      const order = {
+        items: cartItems.map((item) => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        subtotal: Number(finalPrice.toFixed(2)),
+        deliveryTax: Number(deliveryTax.toFixed(2)),
+        total: Number((finalPrice + deliveryTax).toFixed(2)),
+      };
+
+      const response = await api.post('/create-payment-intent', {
+        items: order.items,
+      });
+      const clientSecret = response.data?.clientSecret || response.data?.secret;
+
+      if (!clientSecret) {
+        throw new Error('Client secret não retornada pela API do Stripe.');
+      }
+
+      localStorage.setItem('checkoutOrder', JSON.stringify(order));
+
+      navigate('/checkout', {
+        state: {
+          clientSecret,
+          order,
+        },
+      });
+    } catch (error) {
+      console.error('Erro ao criar intenção de pagamento:', error);
+      toast.error(
+        error.response?.data?.message ||
+          'Não foi possível criar a intenção de pagamento.',
+        {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+        },
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  /* try {
       const payload = {
         product: cartItems.map((item) => ({
           id: item.id,
@@ -48,8 +100,7 @@ export function CartResume() {
       );
     } finally {
       setIsSubmitting(false);
-    }
-  };
+    } */
 
   return (
     <div>
