@@ -30,6 +30,39 @@ export const Subtitle = styled.p`
   font-size: 0.98rem;
 `;
 
+export const Summary = styled.div`
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 123, 0, 0.25);
+  border-radius: 12px;
+  padding: 16px 18px;
+  color: #fff;
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 6px 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .total {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+  }
+`;
+
+export const SummaryTitle = styled.h2`
+  color: #ff7b00;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+`;
+
 export const PaymentWrap = styled.div`
   margin-top: 20px;
   padding: 16px 0 8px;

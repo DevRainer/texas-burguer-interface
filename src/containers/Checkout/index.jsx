@@ -52,17 +52,24 @@ export function Checkout() {
     fetchPaymentIntent();
   }, [clientSecret, navigate, order]);
 
-  const totalValue = Number(order?.total ?? 0);
-  const orderWithTotal = { ...order, total: totalValue };
+  const orderWithTotal = {
+    ...order,
+    subtotal: Number(order?.subtotal ?? 0),
+    deliveryTax: Number(order?.deliveryTax ?? 0),
+    total: Number(order?.total ?? 0),
+  };
 
-  if (!clientSecret || !order) {
+  if (!clientSecret || !order || !stripePromise) {
     return (
       <Page>
         <FormCard as="div">
           <Title>Checkout</Title>
           <Subtitle>
-            Nenhuma intenção de pagamento encontrada para este pedido.
+            {stripePromise
+              ? 'Nenhuma intenção de pagamento encontrada para este pedido.'
+              : 'Pagamento indisponível: defina VITE_STRIPE_PUBLIC_KEY no arquivo .env do frontend.'}
           </Subtitle>
+          {order && stripePromise && <OrderSummary order={orderWithTotal} />}
         </FormCard>
       </Page>
     );
