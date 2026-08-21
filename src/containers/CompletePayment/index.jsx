@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
+import { formatPrice } from '../../utils/formatPrice';
 import { Card, Page, Text, Title } from './styles';
 
 export function CompletePayment() {
@@ -13,11 +14,7 @@ export function CompletePayment() {
         <Title>Pagamento concluído</Title>
         <Text>Seu pedido foi confirmado com sucesso.</Text>
         {paymentIntentId && <Text>ID do pagamento: {paymentIntentId}</Text>}
-        {total && (
-          <Text>
-            Total pago: R$ {Number(total).toFixed(2).replace('.', ',')}
-          </Text>
-        )}
+        {total > 0 && <Text>Total pago: {formatPrice(total)}</Text>}
       </Card>
     </Page>
   );

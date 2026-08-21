@@ -8,6 +8,9 @@ import { formatPrice } from '../../utils/formatPrice';
 import { Button } from '../Button';
 import { Container } from './styles';
 
+const DELIVERY_TAX = 500;
+const FREE_DELIVERY_FROM = 10000;
+
 export function CartResume() {
   const { cartItems } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -17,7 +20,10 @@ export function CartResume() {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [cartItems]);
 
-  const deliveryTax = useMemo(() => (finalPrice > 100 ? 0 : 5), [finalPrice]);
+  const deliveryTax = useMemo(
+    () => (finalPrice > FREE_DELIVERY_FROM ? 0 : DELIVERY_TAX),
+    [finalPrice],
+  );
 
   const submitOrder = async () => {
     if (!cartItems.length) {
@@ -35,13 +41,14 @@ export function CartResume() {
           price: item.price,
           quantity: item.quantity,
         })),
-        subtotal: Number(finalPrice.toFixed(2)),
-        deliveryTax: Number(deliveryTax.toFixed(2)),
-        total: Number((finalPrice + deliveryTax).toFixed(2)),
+        subtotal: finalPrice,
+        deliveryTax,
+        total: finalPrice + deliveryTax,
       };
 
       const response = await api.post('/create-payment-intent', {
         items: order.items,
+        deliveryTax: order.deliveryTax,
       });
       const clientSecret = response.data?.clientSecret || response.data?.secret;
 

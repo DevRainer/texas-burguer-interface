@@ -12,22 +12,67 @@ import { loadStripe } from '@stripe/stripe-js';
 import PropTypes from 'prop-types';
 
 import { Button } from '../../components/Button';
+import { useCart } from '../../hooks/useCart';
 import { api } from '../../services/api';
+import { formatPrice } from '../../utils/formatPrice';
 import {
   FormCard,
   Page,
   PaymentWrap,
   Subtitle,
+  Summary,
+  SummaryTitle,
   Title,
   stripeAppearance,
 } from './styles';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+function OrderSummary({ order }) {
+  return (
+    <Summary>
+      <SummaryTitle>Resumo do pedido</SummaryTitle>
+      {order.items.map((item) => (
+        <div className="line" key={item.id}>
+          <span>
+            {item.quantity}x {item.name}
+          </span>
+          <span>{formatPrice(item.price * item.quantity)}</span>
+        </div>
+      ))}
+      <div className="line">
+        <span>Subtotal</span>
+        <span>{formatPrice(order.subtotal)}</span>
+      </div>
+      <div className="line">
+        <span>Taxa de entrega</span>
+        <span>{formatPrice(order.deliveryTax)}</span>
+      </div>
+      <div className="line total">
+        <span>Total a pagar</span>
+        <span>{formatPrice(order.total)}</span>
+      </div>
+    </Summary>
+  );
+}
+
+const orderPropType = PropTypes.shape({
+  items: PropTypes.array.isRequired,
+  subtotal: PropTypes.number.isRequired,
+  deliveryTax: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+});
+
+OrderSummary.propTypes = {
+  order: orderPropType.isRequired,
+};
+
+const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
+const stripePromise = stripePublicKey ? loadStripe(stripePublicKey) : null;
 
 function CheckoutForm({ order }) {
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
+  const { clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -53,18 +98,21 @@ function CheckoutForm({ order }) {
       }
 
       if (result.paymentIntent?.status === 'succeeded') {
-        const orderToSave = {
-          ...order,
+        await api.post('/orders', {
+          product: order.items.map((item) => ({
+            id: item.id,
+            quantity: item.quantity,
+          })),
           paymentIntentId: result.paymentIntent.id,
-          total: Number(order?.total ?? 0),
-        };
+        });
 
-        await api.post('/orders', orderToSave);
+        localStorage.removeItem('checkoutOrder');
+        clearCart();
         toast.success('Pagamento confirmado com sucesso!');
         navigate('/complete', {
           state: {
             paymentIntentId: result.paymentIntent.id,
-            total: orderToSave.total,
+            total: order.total,
           },
         });
       }
@@ -80,24 +128,23 @@ function CheckoutForm({ order }) {
       <Title>Checkout</Title>
       <Subtitle>Finalize seu pedido com segurança pelo Stripe.</Subtitle>
 
+      <OrderSummary order={order} />
+
       <PaymentWrap>
         <PaymentElement />
       </PaymentWrap>
 
       <Button type="submit" disabled={!stripe || isProcessing}>
-        {isProcessing ? 'Processando...' : 'Pagar agora'}
+        {isProcessing
+          ? 'Processando...'
+          : `Pagar agora ${formatPrice(order.total)}`}
       </Button>
     </FormCard>
   );
 }
 
 CheckoutForm.propTypes = {
-  order: PropTypes.shape({
-    items: PropTypes.array.isRequired,
-    subtotal: PropTypes.number.isRequired,
-    deliveryTax: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
-  }).isRequired,
+  order: orderPropType.isRequired,
 };
 
 export function Checkout() {
@@ -128,6 +175,7 @@ export function Checkout() {
       try {
         const { data } = await api.post('/create-payment-intent', {
           items: order.items,
+          deliveryTax: Number(order.deliveryTax ?? 0),
         });
         setClientSecret(data.clientSecret);
         localStorage.setItem('checkoutOrder', JSON.stringify(order));
@@ -140,17 +188,24 @@ export function Checkout() {
     fetchPaymentIntent();
   }, [clientSecret, navigate, order]);
 
-  const totalValue = Number(order?.total ?? 0);
-  const orderWithTotal = { ...order, total: totalValue };
+  const orderWithTotal = {
+    ...order,
+    subtotal: Number(order?.subtotal ?? 0),
+    deliveryTax: Number(order?.deliveryTax ?? 0),
+    total: Number(order?.total ?? 0),
+  };
 
-  if (!clientSecret || !order) {
+  if (!clientSecret || !order || !stripePromise) {
     return (
       <Page>
         <FormCard as="div">
           <Title>Checkout</Title>
           <Subtitle>
-            Nenhuma intenção de pagamento encontrada para este pedido.
+            {stripePromise
+              ? 'Nenhuma intenção de pagamento encontrada para este pedido.'
+              : 'Pagamento indisponível: defina VITE_STRIPE_PUBLIC_KEY no arquivo .env do frontend.'}
           </Subtitle>
+          {order && stripePromise && <OrderSummary order={orderWithTotal} />}
         </FormCard>
       </Page>
     );
