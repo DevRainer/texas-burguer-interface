@@ -1,0 +1,50 @@
+.stripe-checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: min(100%, 460px);
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.stripe-checkout-payment {
+  width: 100%;
+}
+
+.stripe-checkout-payment .StripeElement,
+.stripe-checkout-payment .__PrivateStripeElement,
+.stripe-checkout-payment .p-Input,
+.stripe-checkout-payment [data-elements-stable] {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  box-shadow: none;
+}
+
+.stripe-checkout-form button {
+  margin-top: 0;
+  height: 44px;
+  border-radius: 8px;
+  background: #0055d9;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.stripe-checkout-form button:hover {
+  background: #004ac2;
+}
+
+.stripe-checkout-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.stripe-checkout-payment .p-Input:focus,
+.stripe-checkout-payment .__PrivateStripeElement:focus {
+  border-color: #0055d9;
+  box-shadow: 0 0 0 1px rgba(0, 85, 217, 0.2);
+}

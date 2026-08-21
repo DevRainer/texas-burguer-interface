@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 import PropTypes from 'prop-types';
 
 import { useCart } from '../../hooks/useCart';
@@ -17,12 +15,7 @@ export function CardProduct({ product }) {
         <p>{product.name}</p>
         <strong>{formatPrice(product.price)}</strong>
       </div>
-      <CardButton
-        onClick={() => {
-          addToCart({ ...product, quantity: 1 });
-          toast.success(`${product.name} foi adicionado ao carrinho!`);
-        }}
-      >
+      <CardButton onClick={() => addToCart({ ...product, quantity: 1 })}>
         Comprar
       </CardButton>
     </Container>

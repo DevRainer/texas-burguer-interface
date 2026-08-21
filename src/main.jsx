@@ -4,16 +4,11 @@ import { RouterProvider } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-
 import { AuthProvider } from './providers/AuthProvider';
 import { CartProvider } from './providers/CartProvider';
 import { UserProvider } from './providers/UserProvider';
 import { router } from './router';
 import GlobalStyles from './styles/globalStyles';
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 function App() {
   return (
@@ -27,13 +22,12 @@ function App() {
             closeButton={false}
             rtl={false}
             limit={1}
-            autoClose={3000}
+            autoClose={1200}
             hideProgressBar
             draggable={false}
+            pauseOnHover={false}
           />
-          <Elements stripe={stripePromise}>
-            <RouterProvider router={router} />
-          </Elements>
+          <RouterProvider router={router} />
         </CartProvider>
       </UserProvider>
     </AuthProvider>

@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
-import { Card, Page, Text, Title } from './styles';
+import { formatPrice } from '../../utils/formatPrice';
+import { Card, Page, Text, Title, Badge, Summary, SummaryRow } from './styles';
 
 export function CompletePayment() {
   const location = useLocation();
@@ -10,14 +11,24 @@ export function CompletePayment() {
   return (
     <Page>
       <Card>
+        <Badge>✓</Badge>
         <Title>Pagamento concluído</Title>
         <Text>Seu pedido foi confirmado com sucesso.</Text>
-        {paymentIntentId && <Text>ID do pagamento: {paymentIntentId}</Text>}
-        {total && (
-          <Text>
-            Total pago: R$ {Number(total).toFixed(2).replace('.', ',')}
-          </Text>
-        )}
+
+        <Summary>
+          {total > 0 && (
+            <SummaryRow>
+              <span>Total pago</span>
+              <strong>{formatPrice(total)}</strong>
+            </SummaryRow>
+          )}
+          {paymentIntentId && (
+            <SummaryRow>
+              <span>ID do pagamento</span>
+              <strong>{paymentIntentId}</strong>
+            </SummaryRow>
+          )}
+        </Summary>
       </Card>
     </Page>
   );

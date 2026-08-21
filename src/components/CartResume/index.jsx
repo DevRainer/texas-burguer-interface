@@ -42,6 +42,7 @@ export function CartResume() {
 
       const response = await api.post('/create-payment-intent', {
         items: order.items,
+        paymentMethodTypes: ['card'],
       });
       const clientSecret = response.data?.clientSecret || response.data?.secret;
 
