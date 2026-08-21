@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
+import { OrderSummary } from '../../components';
 import { CheckoutForm } from '../../components/Stripe/CheckoutForm';
 import { api } from '../../services/api';
 import { FormCard, Page, Subtitle, Title, stripeAppearance } from './styles';

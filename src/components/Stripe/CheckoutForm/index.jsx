@@ -47,6 +47,14 @@ export function CheckoutForm({ order }) {
       if (result.paymentIntent?.status === 'succeeded') {
         const orderToSave = {
           ...order,
+          deliveryTax: Number(order?.deliveryTax ?? 0),
+          subtotal: Number(order?.subtotal ?? 0),
+          items: order.items.map((item, index) => ({
+            id: item.id ?? index, // gera id se não existir
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
           paymentIntentId: result.paymentIntent.id,
           total: Number(order?.total ?? 0),
         };
