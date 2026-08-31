@@ -1,6 +1,7 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
+// src/main.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
@@ -9,7 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import { AuthProvider } from './providers/AuthProvider';
 import { CartProvider } from './providers/CartProvider';
 import { UserProvider } from './providers/UserProvider';
-import { router } from './router';
+import AppRoutes from './router/index.jsx';
 import GlobalStyles from './styles/globalStyles';
 import { standardTheme } from './styles/themes/standard';
 
@@ -31,7 +32,9 @@ function App() {
               draggable={false}
               pauseOnHover={false}
             />
-            <RouterProvider router={router} />
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
           </CartProvider>
         </UserProvider>
       </AuthProvider>
@@ -39,10 +42,10 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 );
 
 export default App;

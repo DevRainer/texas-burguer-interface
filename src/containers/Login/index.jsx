@@ -53,7 +53,9 @@ export function Login() {
         },
       );
       reset();
-      navigate('/');
+      if (JSON.parse(localStorage.getItem('user'))?.admin) {
+        navigate('/admin');
+      } else navigate('/');
     } catch (error) {
       console.error(error);
     }
