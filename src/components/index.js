@@ -11,3 +11,4 @@ export * from './CartResume';
 export * from './CartItems';
 export * from './Stripe/CheckoutForm';
 export * from './OrderSummary';
+export * from './SideBarAdmin';

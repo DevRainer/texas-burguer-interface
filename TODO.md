@@ -6,3 +6,6 @@
 - [x] Verificar se há outros lugares com o mesmo padrão (se necessário)
 - [x] Testar navegação por categorias no cardápio (verificado via lint)
 
+## Plano para Ajustes
+
+- [ ] Falha de segurança retornando senha e e-mail

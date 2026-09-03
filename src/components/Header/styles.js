@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import backgroundLogin from '../../assets/background-login.png';
+
 export const Container = styled.div`
-  background-color: #1f1f1f;
+  background-image: url(${backgroundLogin});
   width: 100%;
   height: 72px;
 `;

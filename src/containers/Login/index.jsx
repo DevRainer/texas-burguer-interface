@@ -54,7 +54,7 @@ export function Login() {
       );
       reset();
       if (JSON.parse(localStorage.getItem('user'))?.admin) {
-        navigate('/admin');
+        navigate('/admin/pedidos');
       } else navigate('/');
     } catch (error) {
       console.error(error);

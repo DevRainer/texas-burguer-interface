@@ -9,10 +9,13 @@ import {
   Login,
   Menu,
   Register,
+  EditProduct,
+  Orders,
+  NewProduct,
+  Products,
 } from '../containers';
-import { Admin } from '../containers/Admin';
-import { AdminLayout } from './AdminLayout';
-import { Layout } from './Layout';
+import { AdminLayout } from '../layouts/AdminLayout/AdminLayout';
+import { Layout } from '../layouts/UserLayout/Layout';
 import { ProtectedRoute } from './ProtectedRoute';
 
 function AppRoutes() {
@@ -36,8 +39,10 @@ function AppRoutes() {
 
       {/* Rotas administrativas */}
       <Route element={<AdminLayout />}>
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/home" element={<h1>Admin - Usuários</h1>} />
+        <Route path="/admin/produtos" element={<Products />} />
+        <Route path="/admin/pedidos" element={<Orders />} />
+        <Route path="/admin/novo-produto" element={<NewProduct />} />
+        <Route path="/admin/editar-produto" element={<EditProduct />} />
         {/* outras rotas de administração */}
       </Route>
 
