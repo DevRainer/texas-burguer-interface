@@ -13,7 +13,11 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.2",
+    "@mui/icons-material": "^9.4.0",
+    "@mui/material": "^9.4.0",
     "@phosphor-icons/react": "^2.1.10",
     "@stripe/react-stripe-js": "^6.8.1",
     "@stripe/stripe-js": "^9.13.0",
