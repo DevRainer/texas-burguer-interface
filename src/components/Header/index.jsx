@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { UserCircle, ShoppingCart } from '@phosphor-icons/react';
+import { UserCircleIcon, ShoppingCartIcon } from '@phosphor-icons/react';
 
+import { useAuth } from '../../hooks/useAuth.js';
 import { useCart } from '../../hooks/useCart'; // ajuste o caminho conforme sua estrutura
 import {
   Container,
@@ -19,9 +20,14 @@ import {
 export function Header() {
   const navigate = useNavigate();
   const { cartItems } = useCart(); // vindo do contexto
+  const { user, logout } = useAuth();
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
+  // extrai apenas o primeiro nome do usuário logado
+  const firstName = user?.name?.split(' ')[0] || 'Usuário';
+
   function handleLogout() {
+    logout();
     navigate('/login');
   }
 
@@ -37,17 +43,17 @@ export function Header() {
         </Navigation>
         <Option>
           <Profile>
-            <UserCircle size={32} color="#fff" />
+            <UserCircleIcon size={32} color="#fff" />
             <div>
               <p>
-                Olá, <span>Rainer</span>
+                Olá, <span>{firstName}</span>
               </p>
               <Logout onClick={handleLogout}>Sair</Logout>
             </div>
           </Profile>
           <LinkContainer>
             <CartIconWrapper>
-              <ShoppingCart size={32} color="#fff" />
+              <ShoppingCartIcon size={32} color="#fff" />
               {totalItems > 0 && <CartCount>{totalItems}</CartCount>}
             </CartIconWrapper>
             <HeaderLink to="/carrinho">Carrinho</HeaderLink>

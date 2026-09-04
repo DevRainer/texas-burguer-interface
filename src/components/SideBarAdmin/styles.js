@@ -28,6 +28,8 @@ export const NavLink = styled(Link)`
   padding: 12px 20px;
   text-decoration: none;
   color: ${({ theme }) => theme.white};
+  background-color: ${({ $isActive, theme }) => ($isActive ? theme.orange : 'transparent')};
+  font-weight: ${({ $isActive }) => ($isActive ? 'bold' : 'normal')};
 
   &:hover {
     background-color: ${({ theme }) => theme.orange};
