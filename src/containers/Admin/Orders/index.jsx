@@ -30,7 +30,7 @@ export function Orders() {
     }
 
     loadOrders();
-  }, [orders]);
+  }, []);
 
   function createData(order) {
     return {

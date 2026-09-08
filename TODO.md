@@ -9,3 +9,10 @@
 ## Plano para Ajustes
 
 - [ ] Falha de segurança retornando senha e e-mail
+- [ ] limpar o dados do carrinho com mais eficiência
+- [x] inserir imagem no Collapse Admin/Row
+- [ ] styles da imagem
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
