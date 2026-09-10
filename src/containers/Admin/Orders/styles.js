@@ -16,5 +16,27 @@ export const ProductImage = styled.img`
   }
 `;
 export const SelectStatus = styled(Select)`
-  width: 150px;
+  width: 200px;
+`;
+
+export const Filter = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin: 29px 0;
+`;
+
+export const FilterOption = styled.button`
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: ${(props) => (props.$isActiveStatus ? props.theme.orange : props.theme.black)};
+  border-bottom: ${(props) =>
+    props.$isActiveStatus ? `2px solid ${props.theme.orange}` : 'none'};
+  font-size: 18px;
+  line-height: 24px;
+  padding: 5px;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 `;

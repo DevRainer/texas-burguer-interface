@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -35,15 +36,36 @@ Row.propTypes = {
       }),
     ).isRequired,
   }).isRequired,
+  onStatusUpdated: PropTypes.func,
 };
 
-export default function Row({ row }) {
+export default function Row({ row, onStatusUpdated }) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState(row.status);
+  const [loading, setIsLoading] = useState(false);
 
   async function newStatusOrder(newStatus) {
-    await api.put(`/orders/${row.orderId}`, { status: newStatus });
-    setStatus(newStatus);
+    setIsLoading(true);
+
+    try {
+      await api.put(`/orders/${row.orderId}`, { status: newStatus });
+      setStatus(newStatus);
+
+      const statusLabel =
+        orderStatusOptions.find((option) => option.value === newStatus)
+          ?.label || newStatus;
+
+      if (onStatusUpdated) {
+        onStatusUpdated(row.orderId, newStatus);
+      }
+
+      toast.success(`Status atualizado: ${statusLabel}`);
+    } catch (error) {
+      toast.error('Não foi possível atualizar o status do pedido.');
+      console.error('Erro ao atualizar status do pedido:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -74,6 +96,8 @@ export default function Row({ row }) {
             onChange={(selectedStatus) => {
               newStatusOrder(selectedStatus.value);
             }}
+            isLoading={loading}
+            menuPortalTarget={document.body}
           />
         </TableCell>
         <TableCell align="right">{formatPrice(row.total)}</TableCell>
