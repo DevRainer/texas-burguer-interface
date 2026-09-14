@@ -23,23 +23,23 @@ import {
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 
 const schema = yup.object().shape({
-  name: yup.string().trim().required('Product name is required'),
+  name: yup.string().trim().required('Digite o nome do produto'),
   price: yup
     .number()
-    .typeError('Price must be a number')
-    .positive('Price must be greater than zero')
-    .required('Price is required'),
+    .typeError('O preço precisa ser um número')
+    .positive('O preço precisa ser maior que zero')
+    .required('Digite o preço do produto'),
   category: yup
     .number()
-    .typeError('Category is required')
-    .integer('Select a valid category')
-    .positive('Select a valid category')
-    .required('Category is required'),
+    .typeError('Escolher uma categoria')
+    .integer('Selecione uma categoria válida')
+    .positive('Selecione uma categoria válida')
+    .required('Escolher uma categoria'),
   image: yup
     .mixed()
     .test(
       'required-file',
-      'Product image is required',
+      'Imagem do produto é obrigatória',
       (value) => value?.length > 0,
     )
     .test(
@@ -52,6 +52,11 @@ const schema = yup.object().shape({
       'file-size',
       'Image must be less than 2MB',
       (value) => !value?.length || value[0].size <= MAX_FILE_SIZE,
+    )
+    .test(
+      'single-file',
+      'Select only one image',
+      (value) => !value?.length || value.length === 1,
     ),
 });
 
@@ -84,7 +89,6 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
   const {
     register,
     handleSubmit,
-    setValue,
     control,
     reset,
     formState: { errors },
@@ -97,12 +101,12 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
       image: undefined,
     },
   });
+  const imageField = register('image');
 
   function handleFileChange(event) {
     const files = event.target.files;
     const selectedFile = files[0];
 
-    setValue('image', files, { shouldValidate: true, shouldDirty: true });
     setFileName(selectedFile?.name || '');
     setImagePreview(selectedFile ? URL.createObjectURL(selectedFile) : '');
   }
@@ -122,7 +126,12 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
       <Form onSubmit={handleSubmit(handleFormSubmit)}>
         <InputGroup>
           <Label htmlFor="name">Nome</Label>
-          <Input id="name" type="text" {...register('name')} />
+          <Input
+            id="name"
+            type="text"
+            aria-invalid={Boolean(errors.name)}
+            {...register('name')}
+          />
           {errors.name && <Error>{errors?.name?.message}</Error>}
         </InputGroup>
 
@@ -133,6 +142,7 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
             type="number"
             min="0.01"
             step="0.01"
+            aria-invalid={Boolean(errors.price)}
             {...register('price')}
           />
           {errors.price && <Error>{errors?.price?.message}</Error>}
@@ -150,8 +160,12 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
               id="image"
               type="file"
               accept="image/png, image/jpeg"
-              {...register('image')}
-              onChange={handleFileChange}
+              aria-invalid={Boolean(errors.image)}
+              {...imageField}
+              onChange={(event) => {
+                imageField.onChange(event);
+                handleFileChange(event);
+              }}
             />
           </LabelUpload>
           {errors.image && <Error>{errors.image.message}</Error>}
@@ -166,6 +180,7 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
               <Select
                 inputId="category"
                 {...field}
+                aria-invalid={Boolean(errors.category)}
                 options={categories.map((category) => ({
                   value: Number(category.id),
                   label: category.name,
@@ -187,7 +202,11 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
           {errors.category && <Error>{errors.category.message}</Error>}
         </InputGroup>
 
-        <SubmitButton type="submit" disabled={isSubmitting}>
+        <SubmitButton
+          type="submit"
+          disabled={isSubmitting}
+          aria-busy={isSubmitting}
+        >
           {isSubmitting ? 'Enviando...' : 'Adicionar Produto'}
         </SubmitButton>
       </Form>
@@ -215,7 +234,7 @@ export function NewProduct() {
     formData.append('name', values.name.trim());
     formData.append('price', String(values.price));
     formData.append('category_id', String(values.category));
-    formData.append('image', imageFile, imageFile.name);
+    formData.append('file', imageFile, imageFile.name);
 
     setIsSubmitting(true);
 

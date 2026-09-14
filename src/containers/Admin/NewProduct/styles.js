@@ -37,7 +37,7 @@ export const Input = styled.input`
   border: none;
 `;
 export const Error = styled.span`
-  color: ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.red};
   font-size: 12px;
 `;
 export const ImagePreview = styled.img`
@@ -87,7 +87,7 @@ export const LabelUpload = styled.label`
 `;
 
 export const Select = styled(ReactSelect)`
-  margin-top: 20px;
+  margin-top: 0;
 `;
 
 export const SubmitButton = styled(Button)`
