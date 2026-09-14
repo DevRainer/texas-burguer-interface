@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +19,7 @@ import {
   Input,
   Error,
   ImagePreview,
+  ContainerCheckBox,
 } from './styles';
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
@@ -35,6 +37,7 @@ const schema = yup.object().shape({
     .integer('Selecione uma categoria válida')
     .positive('Selecione uma categoria válida')
     .required('Escolher uma categoria'),
+  offer: yup.boolean(),
   image: yup
     .mixed()
     .test(
@@ -201,7 +204,12 @@ export const NewProductForm = ({ onSubmit, isSubmitting = false }) => {
           />
           {errors.category && <Error>{errors.category.message}</Error>}
         </InputGroup>
-
+        <InputGroup>
+          <ContainerCheckBox>
+            <input type="checkbox" {...register('offer')} />
+            <Label>Produto em Oferta?</Label>
+          </ContainerCheckBox>
+        </InputGroup>
         <SubmitButton
           type="submit"
           disabled={isSubmitting}
@@ -221,6 +229,7 @@ NewProductForm.propTypes = {
 
 export function NewProduct() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   async function handleCreateProduct(values) {
     const imageFile = values.image?.[0];
@@ -234,6 +243,7 @@ export function NewProduct() {
     formData.append('name', values.name.trim());
     formData.append('price', String(values.price));
     formData.append('category_id', String(values.category));
+    formData.append('offer', String(values.offer));
     formData.append('file', imageFile, imageFile.name);
 
     setIsSubmitting(true);
@@ -241,6 +251,7 @@ export function NewProduct() {
     try {
       await api.post('/products', formData);
       toast.success('Produto criado com sucesso!');
+      navigate('/admin/produtos');
       return true;
     } catch (error) {
       console.error('Erro ao criar produto:', error);
