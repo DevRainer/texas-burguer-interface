@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SummaryContainer = styled.div`
-  background: #fff;
+  background: ${(props) => props.theme.white};
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 20px;
@@ -12,7 +12,7 @@ export const SummaryTitle = styled.h3`
   margin-bottom: 12px;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
+  color: ${(props) => props.theme.black};
 `;
 
 export const SummaryItem = styled.div`
@@ -20,12 +20,12 @@ export const SummaryItem = styled.div`
   justify-content: space-between;
   margin-bottom: 8px;
   font-size: 0.95rem;
-  color: #555;
+  color: ${(props) => props.theme.black};
 `;
 
 export const SummaryTotal = styled(SummaryItem)`
   font-weight: bold;
   font-size: 1.1rem;
-  color: #000;
+  color: ${(props) => props.theme.darkBlack};
   margin-top: 12px;
 `;

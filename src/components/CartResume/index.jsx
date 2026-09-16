@@ -84,31 +84,6 @@ export function CartResume() {
     }
   };
 
-  /* try {
-      const payload = {
-        product: cartItems.map((item) => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-        subtotal: Number(finalPrice.toFixed(2)),
-        deliveryTax: Number(deliveryTax.toFixed(2)),
-        total: Number((finalPrice + deliveryTax).toFixed(2)),
-      };
-
-      await api.post('/orders', payload);
-      clearCart();
-      toast.success('Pedido enviado com sucesso!');
-    } catch (error) {
-      console.error('Erro ao enviar pedido:', error);
-      toast.error(
-        error.response?.data?.message || 'Não foi possível enviar o pedido.',
-      );
-    } finally {
-      setIsSubmitting(false);
-    } */
-
   return (
     <div>
       <Container>

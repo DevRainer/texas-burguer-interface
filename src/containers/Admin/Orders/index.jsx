@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -48,25 +48,28 @@ export function Orders() {
     };
   }
 
-  function applyFilter(nextOrders, selectedStatusId = activeStatus) {
-    if (selectedStatusId === 0) {
-      setFilteredOrders(nextOrders);
-      return;
-    }
+  const applyFilter = useCallback(
+    (nextOrders, selectedStatusId = activeStatus) => {
+      if (selectedStatusId === 0) {
+        setFilteredOrders(nextOrders);
+        return;
+      }
 
-    const selectedStatus = orderStatusOptions.find(
-      (option) => option.id === selectedStatusId,
-    );
+      const selectedStatus = orderStatusOptions.find(
+        (option) => option.id === selectedStatusId,
+      );
 
-    if (!selectedStatus) {
-      setFilteredOrders(nextOrders);
-      return;
-    }
+      if (!selectedStatus) {
+        setFilteredOrders(nextOrders);
+        return;
+      }
 
-    setFilteredOrders(
-      nextOrders.filter((order) => order.status === selectedStatus.value),
-    );
-  }
+      setFilteredOrders(
+        nextOrders.filter((order) => order.status === selectedStatus.value),
+      );
+    },
+    [activeStatus],
+  );
 
   const rows = filteredOrders.map(createData);
 
@@ -93,7 +96,7 @@ export function Orders() {
 
   useEffect(() => {
     applyFilter(orders, activeStatus);
-  }, [orders]);
+  }, [orders, activeStatus, applyFilter]);
 
   return (
     <>

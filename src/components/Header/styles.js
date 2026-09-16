@@ -32,7 +32,7 @@ export const Navigation = styled.nav`
     gap: 20px;
 
     hr {
-      background-color: #ff8c05;
+      background-color: ${(props) => props.theme.orange};
       border: none;
       width: 1px;
       height: 32px;
@@ -40,14 +40,14 @@ export const Navigation = styled.nav`
   }
 `;
 export const HeaderLink = styled(Link)`
-  color: #fff;
+  color: ${(props) => props.theme.white};
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
 
   &:hover {
     opacity: 0.8;
-    color: #ff8c05;
+    color: ${(props) => props.theme.orange};
   }
 `;
 export const Option = styled.div`
@@ -63,13 +63,13 @@ export const Profile = styled.div`
   font-size: 14px;
 
   p {
-    color: #fff;
+    color: ${(props) => props.theme.white};
     line-height: 90%;
     font-weight: 300;
 
     span {
       font-weight: 700;
-      color: #ff8c05;
+      color: ${(props) => props.theme.orange};
     }
   }
 `;
@@ -80,7 +80,7 @@ export const LinkContainer = styled.div`
   margin-right: 56px;
 `;
 export const Logout = styled.button`
-  color: #ff3205;
+  color: ${(props) => props.theme.red};
   text-decoration: none;
   font-weight: 700;
   background-color: transparent;

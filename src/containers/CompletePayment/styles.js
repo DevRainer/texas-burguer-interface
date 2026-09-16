@@ -1,72 +1,62 @@
 import styled from 'styled-components';
 
-export const Page = styled.div`
-  max-width: 720px;
-  margin: 60px auto 0;
-  padding: 0 20px 60px;
-`;
+import background from '../../assets/background.png';
 
-export const Card = styled.div`
-  background: rgba(17, 17, 17, 0.74);
-  border: 1px solid rgba(97, 161, 32, 0.5);
-  border-radius: 24px;
-  padding: 32px 24px 26px;
+export const Page = styled.div`
+  min-height: calc(100vh - 122px);
+  padding: 7px 20px 40px;
   text-align: center;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
+  font-size: 60px;
+  color: ${(props) => props.theme.orange};
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+    url(${background});
+  background-size: cover;
+  background-repeat: repeat;
+
+  section {
+    margin-top: 20px;
+  }
 `;
 
 export const Badge = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: rgba(97, 161, 32, 0.18);
-  border: 2px solid rgba(97, 161, 32, 0.8);
-  color: #a7ff47;
-  font-size: 2.2rem;
-  font-weight: 800;
-  margin-bottom: 18px;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  background: #18a538;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.18);
 `;
 
 export const Title = styled.h1`
   color: #61a120;
-  font-size: clamp(1.9rem, 2vw, 2.5rem);
-  font-weight: 800;
-  margin-bottom: 12px;
+  font-size: 50px;
+  font-weight: 700;
+  margin-bottom: 34px;
 `;
 
 export const Text = styled.p`
-  color: rgba(255, 255, 255, 0.82);
-  margin-bottom: 12px;
-  font-size: 1rem;
+  color: #222;
+  margin: 10px 0 33px;
+  font-size: 34px;
+  line-height: 1.45;
 `;
 
-export const Summary = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px 18px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  text-align: left;
-`;
+export const BackToStart = styled.button`
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #9758a6;
+  font-size: 30px;
+  text-decoration: underline;
 
-export const SummaryRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.95rem;
-
-  strong {
-    color: #fff;
-    font-weight: 700;
-    text-align: right;
-    word-break: break-all;
+  &:hover {
+    color: #5c2669;
   }
 `;

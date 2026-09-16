@@ -4,17 +4,23 @@ import { toast } from 'react-toastify';
 
 import { loadStripe } from '@stripe/stripe-js';
 
+import { useCart } from '../../hooks/useCart';
 import { api } from '../../services/api';
-import { formatPrice } from '../../utils/formatPrice';
-import { Card, Page, Text, Title, Badge, Summary, SummaryRow } from './styles';
+import { Badge, Page, Text, Title, BackToStart } from './styles';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 export function CompletePayment() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { clearCart } = useCart();
   const [payment, setPayment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  function handleBackToStart() {
+    clearCart();
+    navigate('/');
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -86,26 +92,19 @@ export function CompletePayment() {
 
   return (
     <Page>
-      <Card>
-        <Badge>✓</Badge>
-        <Title>Pagamento concluído</Title>
-        <Text>Seu pedido foi confirmado com sucesso.</Text>
-
-        <Summary>
-          {payment.total > 0 && (
-            <SummaryRow>
-              <span>Total pago</span>
-              <strong>{formatPrice(payment.total)}</strong>
-            </SummaryRow>
-          )}
-          {payment.id && (
-            <SummaryRow>
-              <span>ID do pagamento</span>
-              <strong>{payment.id}</strong>
-            </SummaryRow>
-          )}
-        </Summary>
-      </Card>
+      <Title>Checkout - Pedido concluído</Title>
+      <Badge aria-label="Pagamento confirmado">✓</Badge>
+      <section>
+        <h2>Obrigado!</h2>
+        <Text>
+          Seu pedido já está em produção e logo sairá
+          <br />
+          para entrega. Agradecemos a preferência!
+        </Text>
+        <BackToStart type="button" onClick={handleBackToStart}>
+          Voltar para o início
+        </BackToStart>
+      </section>
     </Page>
   );
 }

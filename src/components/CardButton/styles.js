@@ -7,12 +7,12 @@ export const ContainerButton = styled.button`
   justify-content: center;
   width: 100%;
   height: 52px;
-  background-color: #ff8c05;
+  background-color: ${(props) => props.theme.orange};
   border: none;
   border-radius: 5px;
   font-size: 40px;
   font-family: 'Road Rage', sans-serif;
-  color: #fff;
+  color: ${(props) => props.theme.white};
   padding: 0 20px;
   gap: 10px;
   text-align: center;
@@ -24,6 +24,6 @@ export const ContainerButton = styled.button`
   }
 
   &:hover {
-    background-color: #61a120;
+    background-color: ${(props) => props.theme.gren};
   }
 `;

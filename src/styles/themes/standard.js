@@ -2,7 +2,7 @@ export const standardTheme = {
   purple: '#9758a6',
   darkPurple: '#5c2669',
   secondDarkPurple: '#6f357c',
-  orange: '#ff8c05',
+  orange: '#f55f09',
   mainBlack: '#1f1f1f',
   black: '#363636',
   secondBlack: '#484848',
@@ -14,6 +14,8 @@ export const standardTheme = {
   secondWhite: '#f0f0f0',
   darkWhite: '#f4f4f4',
   gren: '#61a120',
+  blue: '#004ac2',
+  darkBlack: '#000000',
   roadRageFont: '"Road Rage", sans-serif',
   poppinsFont: '"Poppins", sans-serif',
 };

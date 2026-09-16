@@ -5,4 +5,5 @@ export const orderStatusOptions = [
   { id: 3, value: 'completed', label: 'Pedido Pronto' },
   { id: 4, value: 'out_for_delivery', label: 'Pedido à caminho' },
   { id: 5, value: 'delivered', label: 'Pedido Entregue' },
+  { id: 6, value: 'canceled', label: 'Pedido Cancelado' },
 ];

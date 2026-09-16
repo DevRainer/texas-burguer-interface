@@ -19,7 +19,7 @@ export const Title = styled.h2`
   margin-top: 70px;
   font-size: 48px;
   font-weight: 800;
-  color: #61a120;
+  color: ${(props) => props.theme.gren};
   padding-bottom: 20px;
   position: relative;
   text-align: center;
@@ -30,7 +30,7 @@ export const Title = styled.h2`
     position: absolute;
     width: 56px;
     height: 4px;
-    background-color: #61a120;
+    background-color: ${(props) => props.theme.gren};
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);

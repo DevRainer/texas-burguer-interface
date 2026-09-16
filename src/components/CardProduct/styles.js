@@ -8,8 +8,8 @@ export const Container = styled.div`
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 15px;
-  border: 1px solid #ddd;
-  background-color: #fff;
+  border: 1px solid ${(props) => props.theme.lightGray};
+  background-color: ${(props) => props.theme.white};
   cursor: grab;
 
   width: 300px;
@@ -29,13 +29,13 @@ export const Container = styled.div`
     p {
       font-size: 18px;
       font-weight: 700;
-      color: #f55f09;
+      color: ${(props) => props.theme.orange};
       line-height: 1.2;
       margin-top: 40px;
 
       strong {
         font-size: 22px;
-        color: #363636;
+        color: ${(props) => props.theme.black};
         font-weight: 800;
         line-height: 20px;
         justify-content: flex-start;

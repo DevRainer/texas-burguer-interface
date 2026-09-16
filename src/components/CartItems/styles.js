@@ -19,9 +19,9 @@ export const QuantityControl = styled.div`
   gap: 9px;
 
   button {
-    background: #f55f09;
+    background: ${(props) => props.theme.orange};
     border: none;
-    color: #fff;
+    color: ${(props) => props.theme.white};
     font-size: 16px;
     font-weight: bold;
     width: 28px;
@@ -31,7 +31,7 @@ export const QuantityControl = styled.div`
     transition: background 0.2s;
 
     &:hover {
-      background: #f52509;
+      background: ${(props) => props.theme.red};
     }
   }
 
@@ -46,7 +46,7 @@ export const EmptyCartMessage = styled.td`
   text-align: center;
   padding: 20px;
   font-size: 16px;
-  color: #666;
+  color: ${(props) => props.theme.darkGray};
 `;
 
 export const ProductTotalPrice = styled.td`
